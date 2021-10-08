@@ -70,7 +70,7 @@ test:
     - ipython
     - setuptools
     - tbb >=2021.0
-    - intel-openmp             # [osx]
+    - llvm-openmp              # [osx]
     # Need these for AOT. Do not init msvc as it may not be present
     - {{ compiler('c') }}      # [not win]
     - {{ compiler('cxx') }}    # [not win]
