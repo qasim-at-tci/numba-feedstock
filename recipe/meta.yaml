@@ -51,7 +51,7 @@ requirements:
     - setuptools
 
   run_constrained:
-    - tbb 2021.*
+    - tbb  >=2021.0
     # avoid confusion from openblas bugs
     - libopenblas !=0.3.6      # [x86_64]
     # CUDA 9.2 or later is required for CUDA support
@@ -69,7 +69,7 @@ test:
     - scipy
     - ipython
     - setuptools
-    - tbb 2021.*
+    - tbb >=2021.0
     - llvm-openmp              # [osx]
     # Need these for AOT. Do not init msvc as it may not be present
     - {{ compiler('c') }}      # [not win]
