@@ -1,6 +1,6 @@
 {% set name = "numba" %}
-{% set version = "0.54.1" %}
-{% set sha256 = "919b9269c253ccbc4110de736cc9e5c8abae68f452dd229734e3a25ac987a0e7" %}
+{% set version = "0.55.0" %}
+{% set sha256 = "625c8028ba72f8ab94c0febbce94bfb1bf395bf917cf6d4666f24b553de1170e" %}
 
 package:
   name: numba
@@ -39,9 +39,9 @@ requirements:
     - python
     - pip
     - setuptools
-    - llvmlite 0.37.*
+    - llvmlite 0.38.*
     - numpy
-    - tbb-devel >=2021.0
+    - tbb-devel 2021.*
 
   run:
     - python
@@ -54,12 +54,12 @@ requirements:
     - tbb  >=2021.0
     # avoid confusion from openblas bugs
     - libopenblas !=0.3.6      # [x86_64]
-    # CUDA 9.0 or later is required for CUDA support
-    - cudatoolkit >=9.0
+    # CUDA 9.2 or later is required for CUDA support
+    - cudatoolkit >=9.2
     # scipy 1.0 or later
     - scipy >=1.0
     # numpy has a hard upper limit currently
-    - numpy >=1.17,<1.21
+    - numpy >=1.18,<1.22
 
 test:
   requires:
