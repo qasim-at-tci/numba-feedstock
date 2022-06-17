@@ -1,6 +1,6 @@
 {% set name = "numba" %}
-{% set version = "0.55.1" %}
-{% set sha256 = "542a9b514031f6afae971b627930fcaec057cdb604d54db7cbddfb050c580fb9" %}
+{% set version = "0.55.2" %}
+{% set sha256 = "1b44f7c193e838eb14a16ab8423df7b60a5ddad5b250e779fd5ab1c7c42e9355" %}
 
 package:
   name: numba
@@ -14,12 +14,13 @@ source:
     - patch-parfor.patch
 
 build:
-  number: 1
+  number: 0
   entry_points:
     - pycc = numba.pycc:main
     - numba = numba.misc.numba_entry:main
   script:
     - export CC="${CC} -pthread"  # [linux]
+    - export CXX="${CXX} -pthread"  # [linux]
     - {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv
   ignore_run_exports:
     # tbb-devel triggers hard dependency on tbb, this is not the case.
@@ -53,18 +54,22 @@ requirements:
     - setuptools
 
   run_constrained:
-    - tbb  >=2021.0
+    - tbb  2021.*  # [not (armv6l or armv7l or aarch64 or linux32 or ppc64le)]
     # avoid confusion from openblas bugs
-    - libopenblas !=0.3.6      # [x86_64]
+    - libopenblas !=0.3.6  # [x86_64]
+    - libopenblas >=0.3.18, !=0.3.20  # [arm64]
     # CUDA 9.2 or later is required for CUDA support
     - cudatoolkit >=9.2
     # scipy 1.0 or later
     - scipy >=1.0
-    # numpy has a hard upper limit currently
-    - numpy >=1.18,<1.22
+    # numpy has a hard upper limit
+    - numpy >=1.18,<1.23
+    # CUDA Python 11.6 or later
+    - cuda-python >=11.6
 
 test:
   requires:
+    - pip
     # Required to test optional Numba features
     - jinja2
     - cffi
@@ -104,6 +109,9 @@ test:
     - numba.testing
     - numba.tests
     - numba.tests.npyufunc
+    
+  commands:
+    - pip check
 
 about:
   home: http://numba.pydata.org
