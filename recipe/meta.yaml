@@ -42,7 +42,7 @@ requirements:
     - python
     - pip
     - setuptools
-    - llvmlite 0.38.*
+    - llvmlite 0.39.*
     - numpy
     - tbb-devel 2021.*
 
