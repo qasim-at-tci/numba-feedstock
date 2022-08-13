@@ -16,13 +16,13 @@ else
   echo Error
 fi
 
-# limit CPUs in use on PPC64LE, fork() issues
+# limit CPUs in use on PPC64LE and AARCH64, fork() issues
 # occur on high core count systems
 archstr=`uname -m`
 if [[ "$archstr" == 'ppc64le' ]]; then
     TEST_NPROCS=1
 elif [[ "$archstr" == 'aarch64' ]]; then
-    TEST_NPROCS=4
+    TEST_NPROCS=1
 else
     TEST_NPROCS=${CPU_COUNT}
 fi
