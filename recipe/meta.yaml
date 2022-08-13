@@ -48,7 +48,7 @@ requirements:
     - python
     - {{ pin_compatible('llvmlite', max_pin='x.x') }}
     - {{ pin_compatible('numpy') }}
-    - importlib_metadata  # [py < 39]
+    - importlib-metadata  # [py < 39]
     # needed for pkg_resources
     - setuptools
 
