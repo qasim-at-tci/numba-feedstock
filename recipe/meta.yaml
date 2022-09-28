@@ -1,6 +1,6 @@
 {% set name = "numba" %}
-{% set version = "0.56.0" %}
-{% set sha256 = "58653ee67ecf198ae82ff1c30f4313d5c5ee931ddd8429badf11ed2b9c149110" %}
+{% set version = "0.56.2" %}
+{% set sha256 = "26d78287b6c79eca299f2b87332803d46fc441e83c86103dd3cc515a650413f9" %}
 
 package:
   name: numba
@@ -64,7 +64,7 @@ requirements:
     # NumPy has a hard upper limit.
     # Also NumPy 1.22.0, 1.22.1, 1.22.2 are all broken for ufuncs
     # xref: https://github.com/numba/numba/issues/7756
-    - numpy >=1.18,!=1.22.0,!=1.22.1,!=1.22.2,<1.23
+    - numpy >=1.18,!=1.22.0,!=1.22.1,!=1.22.2,<1.24
     # CUDA Python 11.6 or later
     - cuda-python >=11.6
 
