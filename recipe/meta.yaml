@@ -1,6 +1,6 @@
 {% set name = "numba" %}
-{% set version = "0.55.2" %}
-{% set sha256 = "1b44f7c193e838eb14a16ab8423df7b60a5ddad5b250e779fd5ab1c7c42e9355" %}
+{% set version = "0.56.2" %}
+{% set sha256 = "26d78287b6c79eca299f2b87332803d46fc441e83c86103dd3cc515a650413f9" %}
 
 package:
   name: numba
@@ -10,8 +10,6 @@ source:
   # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   url: https://github.com/numba/{{ name }}/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - patch-parfor.patch
 
 build:
   number: 0
@@ -42,14 +40,15 @@ requirements:
     - python
     - pip
     - setuptools
-    - llvmlite 0.38.*
+    - llvmlite 0.39.*
     - numpy
-    - tbb-devel 2021.*
+    - tbb-devel 2021.*,<2021.6
 
   run:
     - python
     - {{ pin_compatible('llvmlite', max_pin='x.x') }}
     - {{ pin_compatible('numpy') }}
+    - importlib-metadata  # [py < 39]
     # needed for pkg_resources
     - setuptools
 
@@ -58,12 +57,14 @@ requirements:
     # avoid confusion from openblas bugs
     - libopenblas !=0.3.6  # [x86_64]
     - libopenblas >=0.3.18, !=0.3.20  # [arm64]
-    # CUDA 9.2 or later is required for CUDA support
-    - cudatoolkit >=9.2
+    # CUDA 10.2 or later is required for CUDA support
+    - cudatoolkit >=10.2
     # scipy 1.0 or later
     - scipy >=1.0
-    # numpy has a hard upper limit
-    - numpy >=1.18,<1.23
+    # NumPy has a hard upper limit.
+    # Also NumPy 1.22.0, 1.22.1, 1.22.2 are all broken for ufuncs
+    # xref: https://github.com/numba/numba/issues/7756
+    - numpy >=1.18,!=1.22.0,!=1.22.1,!=1.22.2,<1.24
     # CUDA Python 11.6 or later
     - cuda-python >=11.6
 
@@ -109,7 +110,7 @@ test:
     - numba.testing
     - numba.tests
     - numba.tests.npyufunc
-    
+
   commands:
     - pip check
 
