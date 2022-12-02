@@ -47,3 +47,5 @@ script:
 
 
   - if [[ ${PLATFORM} =~ .*linux.* ]]; then CONDA_FORGE_DOCKER_RUN_ARGS="--network=host --security-opt=seccomp=unconfined" ./.scripts/run_docker_build.sh; fi
+after_script:
+  - sleep 5
